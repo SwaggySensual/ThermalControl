@@ -1,0 +1,17 @@
+As of the end of my internship there were still some modifications I wanted to implement to the code. 
+First and foremost was cleaning up properly the variable definitions at the begginning of the script and 
+in the function arguments. Many functions use "app." variables which point directly at the main 
+script properties section. In a vacuum its not a big deal but any function with "app." arguments requires 
+to be called by the original MATLAB script that has the required properties making the functions not modular and
+harder to troubleshoot. Good practice is to rely as little as possible on ".app" arguments to be able to export
+and import the functions to other versions of this project with minimal implementation effort. 
+The "Cleanup" version was an attempt to deliver a cleaner version but I ran out of time. It has not been tested.
+
+
+Second important thing, the "tracking points function" now uses a method that keeps track of a series of live
+points and their age (in seconds). This was made so that the software would detect big changes in layer
+toolpaths and adjust the "max allowed points" to the new toolpath. In practice, this doesnt work very smoothly
+and in hindsight its a bit over-engineered. A better solution would be to detect when the readings of a point
+spike upwards (new material has been deposited) and save that point to the graduates matrix. This doesnt account
+for the problem the previous method was solving (toolpath becoming way smaller) and will drag ungraduated points
+from the previous layer. With a bit of data cleanup that is easily solvable.
